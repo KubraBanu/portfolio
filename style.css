@@ -368,6 +368,15 @@ ul[role="list"]{list-style:none}
   animation:fadeSlideIn .9s var(--ease-out) .85s forwards;
   opacity:0;
 }
+.hero__highlight{
+  background:linear-gradient(90deg,#6366f1,#06b6d4);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  font-weight:700;
+  font-family:var(--font-display);
+  letter-spacing:.01em;
+}
 .hero__cta{
   display:flex;
   flex-wrap:wrap;
@@ -408,7 +417,7 @@ ul[role="list"]{list-style:none}
   font-family:var(--font-mono);
   font-size:11px;
   backdrop-filter:blur(12px);
-  animation:labelFloat 7s ease-in-out infinite;
+  animation:none;
   min-width:160px;
 }
 .data-label__icon{
