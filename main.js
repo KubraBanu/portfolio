@@ -552,37 +552,114 @@ function initRadarChart() {
 }
 
 /* ===================================
-   ORBITAL FLOWER — JS driven
+   ORBITAL FLOWER — Canvas
    =================================== */
 (function(){
-  const ring = document.querySelector('.orbit__ring');
-  const petals = document.querySelectorAll('.orbit__petal');
-  if (!ring || !petals.length) return;
+  const canvas = document.getElementById('orbitCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const S = 300; // canvas size
+  const cx = S / 2, cy = S / 2;
+  const RADIUS = 108;
+  const PERIOD = 30000; // 30s per full rotation
 
-  const RADIUS = 112;          // px from center
-  const PERIOD = 30000;        // ms per full revolution (30s = slow, elegant)
-  // Starting angles for each petal (evenly spaced)
-  const startAngles = [270, 0, 90, 180]; // top, right, bottom, left (degrees)
+  const petals = [
+    { label: 'B.E.', sub: 'Electronics', color: '#6366f1', angle: -Math.PI/2 },
+    { label: 'MBA',  sub: 'Strategy',    color: '#06b6d4', angle: 0 },
+    { label: 'MSBA', sub: 'Clark Univ.', color: '#14b8a6', angle: Math.PI/2 },
+    { label: 'PCEP', sub: 'Python',      color: '#a78bfa', angle: Math.PI },
+  ];
 
-  let startTime = null;
-
-  function tick(ts) {
-    if (!startTime) startTime = ts;
-    const elapsed = ts - startTime;
-    // angle in radians, full circle = PERIOD ms
-    const angle = (elapsed / PERIOD) * 2 * Math.PI;
-
-    petals.forEach((petal, i) => {
-      const base = (startAngles[i] * Math.PI) / 180;
-      const a = base + angle;
-      const x = Math.cos(a) * RADIUS;
-      const y = Math.sin(a) * RADIUS;
-      // translate to position, counter-rotate so text stays upright
-      petal.style.transform = `translate(${x}px, ${y}px) rotate(${-angle * 180 / Math.PI}deg)`;
-    });
-
-    requestAnimationFrame(tick);
+  function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `${r},${g},${b}`;
   }
 
-  requestAnimationFrame(tick);
+  function draw(ts) {
+    ctx.clearRect(0, 0, S, S);
+    const angle = (ts / PERIOD) * Math.PI * 2;
+
+    // Dashed orbit ring
+    ctx.beginPath();
+    ctx.arc(cx, cy, RADIUS, 0, Math.PI * 2);
+    ctx.setLineDash([5, 8]);
+    ctx.strokeStyle = 'rgba(99,102,241,0.25)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Draw petals
+    petals.forEach(p => {
+      const a = p.angle + angle;
+      const px = cx + Math.cos(a) * RADIUS;
+      const py = cy + Math.sin(a) * RADIUS;
+      const rgb = hexToRgb(p.color);
+      const R = 36;
+
+      // Glow
+      const glow = ctx.createRadialGradient(px, py, 0, px, py, R * 1.8);
+      glow.addColorStop(0, `rgba(${rgb},0.25)`);
+      glow.addColorStop(1, `rgba(${rgb},0)`);
+      ctx.beginPath();
+      ctx.arc(px, py, R * 1.8, 0, Math.PI * 2);
+      ctx.fillStyle = glow;
+      ctx.fill();
+
+      // Circle
+      ctx.beginPath();
+      ctx.arc(px, py, R, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(8,12,18,0.88)`;
+      ctx.fill();
+      ctx.strokeStyle = `rgba(${rgb},0.6)`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Label
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 13px "Clash Display", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(p.label, px, py - 6);
+
+      // Sub label
+      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      ctx.font = '8px "Space Mono", monospace';
+      ctx.fillText(p.sub.toUpperCase(), px, py + 9);
+    });
+
+    // Center core glow
+    const pulse = 0.8 + 0.2 * Math.sin(ts / 1800);
+    const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 58 * pulse);
+    coreGlow.addColorStop(0,   'rgba(99,102,241,0.5)');
+    coreGlow.addColorStop(0.5, 'rgba(6,182,212,0.2)');
+    coreGlow.addColorStop(1,   'rgba(6,182,212,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, 58 * pulse, 0, Math.PI * 2);
+    ctx.fillStyle = coreGlow;
+    ctx.fill();
+
+    // Center core circle
+    const grad = ctx.createRadialGradient(cx-10, cy-10, 0, cx, cy, 50);
+    grad.addColorStop(0, '#6366f1');
+    grad.addColorStop(0.5, '#06b6d4');
+    grad.addColorStop(1, '#14b8a6');
+    ctx.beginPath();
+    ctx.arc(cx, cy, 50, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Core text
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 13px "Clash Display", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Unified', cx, cy - 8);
+    ctx.fillText('Analyst', cx, cy + 9);
+
+    requestAnimationFrame(draw);
+  }
+
+  requestAnimationFrame(draw);
 })();

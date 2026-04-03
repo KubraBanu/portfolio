@@ -128,45 +128,8 @@
         </div>
       </div>
 
-      <!-- Orbital flower — Unified Analyst core + degree petals -->
-      <div class="hero__orbit" aria-hidden="true">
-        <!-- Outer ring (rotates) -->
-        <div class="orbit__ring">
-          <div class="orbit__petal orbit__petal--1">
-            <span class="petal__val">B.E.</span>
-            <span class="petal__sub">Electronics</span>
-          </div>
-          <div class="orbit__petal orbit__petal--2">
-            <span class="petal__val">MBA</span>
-            <span class="petal__sub">Strategy</span>
-          </div>
-          <div class="orbit__petal orbit__petal--3">
-            <span class="petal__val">MSBA</span>
-            <span class="petal__sub">Clark Univ.</span>
-          </div>
-          <div class="orbit__petal orbit__petal--4">
-            <span class="petal__val">PCEP</span>
-            <span class="petal__sub">Python</span>
-          </div>
-        </div>
-        <!-- Center core -->
-        <div class="orbit__core">
-          <span class="orbit__core-title">Unified</span>
-          <span class="orbit__core-title">Analyst</span>
-        </div>
-        <!-- Connector lines (SVG) -->
-        <svg class="orbit__svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="160" cy="160" r="118" stroke="url(#orbitGrad)" stroke-width="1" stroke-dasharray="6 6" opacity="0.4"/>
-          <circle cx="160" cy="160" r="60" stroke="url(#orbitGrad)" stroke-width="1" opacity="0.25"/>
-          <defs>
-            <linearGradient id="orbitGrad" x1="0" y1="0" x2="320" y2="320" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#6366f1"/>
-              <stop offset="50%" stop-color="#06b6d4"/>
-              <stop offset="100%" stop-color="#14b8a6"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
+      <!-- Orbital flower canvas -->
+      <canvas id="orbitCanvas" class="hero__orbit" width="300" height="300" aria-hidden="true"></canvas>
 
       <div class="hero__scroll" aria-label="Scroll down">
         <div class="scroll-line"></div>
