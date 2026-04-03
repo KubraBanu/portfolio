@@ -550,3 +550,39 @@ function initRadarChart() {
   const obs = new IntersectionObserver(e => { if (e[0].isIntersecting) { draw(); obs.disconnect(); } }, { threshold: 0.3 });
   obs.observe(canvas);
 }
+
+/* ===================================
+   ORBITAL FLOWER — JS driven
+   =================================== */
+(function(){
+  const ring = document.querySelector('.orbit__ring');
+  const petals = document.querySelectorAll('.orbit__petal');
+  if (!ring || !petals.length) return;
+
+  const RADIUS = 112;          // px from center
+  const PERIOD = 30000;        // ms per full revolution (30s = slow, elegant)
+  // Starting angles for each petal (evenly spaced)
+  const startAngles = [270, 0, 90, 180]; // top, right, bottom, left (degrees)
+
+  let startTime = null;
+
+  function tick(ts) {
+    if (!startTime) startTime = ts;
+    const elapsed = ts - startTime;
+    // angle in radians, full circle = PERIOD ms
+    const angle = (elapsed / PERIOD) * 2 * Math.PI;
+
+    petals.forEach((petal, i) => {
+      const base = (startAngles[i] * Math.PI) / 180;
+      const a = base + angle;
+      const x = Math.cos(a) * RADIUS;
+      const y = Math.sin(a) * RADIUS;
+      // translate to position, counter-rotate so text stays upright
+      petal.style.transform = `translate(${x}px, ${y}px) rotate(${-angle * 180 / Math.PI}deg)`;
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+})();

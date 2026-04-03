@@ -335,14 +335,12 @@ ul[role="list"]{list-style:none}
   width:100%;
   height:100%;
 }
-/* The ring div is the orbit track — it spins slowly */
+/* The ring — no CSS animation, JS drives it */
 .orbit__ring{
   position:absolute;
   inset:0;
-  animation:orbitSpin 5s linear infinite;
+  transform-origin:50% 50%;
 }
-/* Each petal sits at a fixed offset from center of the ring
-   then counter-spins so text always faces up */
 .orbit__petal{
   position:absolute;
   width:76px;
@@ -355,41 +353,28 @@ ul[role="list"]{list-style:none}
   gap:2px;
   backdrop-filter:blur(10px);
   border:1.5px solid transparent;
-  animation:orbitCounterSpin 5s linear infinite;
-  /* anchor each petal to the ring center, then offset by radius */
   top:50%;
   left:50%;
   margin-top:-38px;
   margin-left:-38px;
+  transform-origin:50% 50%;
 }
-/* top */
 .orbit__petal--1{
-  transform:translateY(-112px);
-  animation:petalCounter1 5s linear infinite;
   background:color-mix(in srgb,#6366f1 22%,rgba(8,12,18,.88));
   border-color:rgba(99,102,241,.55);
   box-shadow:0 0 20px rgba(99,102,241,.35);
 }
-/* right */
 .orbit__petal--2{
-  transform:translateX(112px);
-  animation:petalCounter2 5s linear infinite;
   background:color-mix(in srgb,#06b6d4 22%,rgba(8,12,18,.88));
   border-color:rgba(6,182,212,.55);
   box-shadow:0 0 20px rgba(6,182,212,.35);
 }
-/* bottom */
 .orbit__petal--3{
-  transform:translateY(112px);
-  animation:petalCounter3 5s linear infinite;
   background:color-mix(in srgb,#14b8a6 22%,rgba(8,12,18,.88));
   border-color:rgba(20,184,166,.55);
   box-shadow:0 0 20px rgba(20,184,166,.35);
 }
-/* left */
 .orbit__petal--4{
-  transform:translateX(-112px);
-  animation:petalCounter4 5s linear infinite;
   background:color-mix(in srgb,#a78bfa 22%,rgba(8,12,18,.88));
   border-color:rgba(167,139,250,.55);
   box-shadow:0 0 20px rgba(167,139,250,.35);
@@ -440,29 +425,7 @@ ul[role="list"]{list-style:none}
   text-align:center;
   text-shadow:0 1px 8px rgba(0,0,0,.4);
 }
-/* Petal counter-rotations — each starts at its own offset angle so text stays upright */
-@keyframes orbitSpin{
-  from{transform:rotate(0deg)} to{transform:rotate(360deg)}
-}
-@keyframes petalCounter1{
-  from{transform:translateY(-112px) rotate(0deg)}
-  to{transform:translateY(-112px) rotate(-360deg)}
-}
-@keyframes petalCounter2{
-  from{transform:translateX(112px) rotate(0deg)}
-  to{transform:translateX(112px) rotate(-360deg)}
-}
-@keyframes petalCounter3{
-  from{transform:translateY(112px) rotate(0deg)}
-  to{transform:translateY(112px) rotate(-360deg)}
-}
-@keyframes petalCounter4{
-  from{transform:translateX(-112px) rotate(0deg)}
-  to{transform:translateX(-112px) rotate(-360deg)}
-}
-@keyframes orbitSpin{
-  from{transform:rotate(0deg)} to{transform:rotate(360deg)}
-}
+
 @keyframes corePulse{
   0%,100%{box-shadow:0 0 0 8px rgba(99,102,241,.12),0 0 0 18px rgba(6,182,212,.07),0 0 48px rgba(99,102,241,.5),0 0 80px rgba(6,182,212,.25)}
   50%{box-shadow:0 0 0 12px rgba(99,102,241,.18),0 0 0 26px rgba(6,182,212,.1),0 0 64px rgba(99,102,241,.65),0 0 100px rgba(6,182,212,.3)}
