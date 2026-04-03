@@ -327,21 +327,25 @@ ul[role="list"]{list-style:none}
   height:320px;
   z-index:3;
   pointer-events:none;
-  animation:fadeSlideIn 1s var(--ease-out) .6s forwards;
+  animation:orbitAppear 1s var(--ease-out) .6s forwards;
   opacity:0;
+}
+@keyframes orbitAppear{
+  from{opacity:0;transform:translateY(-50%) scale(.92)}
+  to{opacity:1;transform:translateY(-50%) scale(1)}
 }
 .orbit__svg{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  animation:orbitSpin 28s linear infinite;
+  animation:orbitSpin 60s linear infinite;
   transform-origin:center;
 }
 .orbit__ring{
   position:absolute;
   inset:0;
-  animation:orbitSpin 22s linear infinite;
+  animation:orbitSpin 50s linear infinite;
   transform-origin:center;
 }
 /* Place each petal at 0/90/180/270 deg on the ring radius=118px from center=160 */
@@ -358,7 +362,7 @@ ul[role="list"]{list-style:none}
   backdrop-filter:blur(10px);
   border:1.5px solid transparent;
   /* counter-rotate so text stays upright */
-  animation:orbitCounterSpin 22s linear infinite;
+  animation:orbitCounterSpin 50s linear infinite;
   transform-origin:center;
 }
 .orbit__petal--1{
