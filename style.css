@@ -586,6 +586,7 @@ ul[role="list"]{list-style:none}
 .proj-visual--invest{background:linear-gradient(135deg,#052e16,#065f46,#134e4a)}
 .proj-visual--chips{background:linear-gradient(135deg,#1c1b00,#3d3200,#78350f)}
 .proj-visual--autolotto{background:linear-gradient(135deg,#1c0a00,#3d1a00,#78350f)}
+.proj-visual--radiology{background:linear-gradient(135deg,#0f0c29,#1e1b4b,#1e3a5f)}
 
 .project-card__overlay{
   position:absolute;inset:0;
