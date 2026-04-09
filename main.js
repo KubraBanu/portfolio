@@ -271,192 +271,231 @@ function initNetworkCanvas() {
    =================================== */
 function initProjectCharts() {
 
-  // Chart 1 — Bias project: animated bar chart (model comparison)
+  // ── Chart 1: Silent Disparities — Gender fairness radial rings
   const c1 = document.getElementById('bias-chart');
   if (c1) {
     const ctx = c1.getContext('2d');
     const W = c1.offsetWidth || 400, H = c1.offsetHeight || 220;
     c1.width = W; c1.height = H;
-    const models = ['Log. Reg', 'Rand. Forest', 'Dec. Tree', 'GBT'];
-    const auc =    [0.81,       0.94,          0.88,        0.92];
-    const colors = ['#6366f1','#06b6d4','#14b8a6','#22c55e'];
-    let progress = 0;
-
-    function drawBias() {
-      ctx.clearRect(0, 0, W, H);
-      const pad = { l: 40, r: 16, t: 20, b: 36 };
-      const chartW = W - pad.l - pad.r;
-      const chartH = H - pad.t - pad.b;
-      const barW = chartW / models.length * 0.55;
-      const gap   = chartW / models.length;
-
-      // Grid lines
-      [0.25,0.5,0.75,1].forEach(v => {
-        const y = pad.t + chartH * (1 - v);
+    const cx = W/2, cy = H/2+10;
+    const models = ['LR','RF','GBT','MLP'];
+    const maleAUC  = [0.78, 0.94, 0.92, 0.89];
+    const femAUC   = [0.74, 0.90, 0.88, 0.85];
+    const colors   = ['#6366f1','#06b6d4','#14b8a6','#a78bfa'];
+    let prog = 0;
+    function drawBias(ts) {
+      ctx.clearRect(0,0,W,H);
+      const p = Math.min(prog,1);
+      const maxR = Math.min(W,H)*0.38;
+      models.forEach((m,i) => {
+        const angle = (i/models.length)*Math.PI*2 - Math.PI/2;
+        const mR = maleAUC[i]*maxR*p;
+        const fR = femAUC[i]*maxR*p;
+        // Male arc (outer)
         ctx.beginPath();
-        ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + chartW, y);
-        ctx.strokeStyle = 'rgba(99,102,241,0.1)';
-        ctx.lineWidth = 1; ctx.stroke();
-        ctx.font = '9px Space Mono,monospace';
-        ctx.fillStyle = 'rgba(120,138,170,0.7)';
-        ctx.fillText(v.toFixed(2), 2, y + 3);
-      });
-
-      models.forEach((m, i) => {
-        const val = auc[i] * Math.min(progress, 1);
-        const x = pad.l + gap * i + gap / 2 - barW / 2;
-        const bH = chartH * val;
-        const y = pad.t + chartH - bH;
-
-        // Bar
+        ctx.arc(cx,cy,mR,angle-0.22,angle+0.22);
+        ctx.strokeStyle = colors[i]; ctx.lineWidth=8; ctx.lineCap='round';
+        ctx.globalAlpha=0.85; ctx.stroke(); ctx.globalAlpha=1;
+        // Female arc (inner — offset)
         ctx.beginPath();
-        ctx.roundRect(x, y, barW, bH, [4,4,0,0]);
-        const grad = ctx.createLinearGradient(0, y, 0, y + bH);
-        grad.addColorStop(0, colors[i]);
-        grad.addColorStop(1, colors[i] + '55');
-        ctx.fillStyle = grad;
-        ctx.fill();
-
+        ctx.arc(cx,cy,fR*0.78,angle-0.22,angle+0.22);
+        ctx.strokeStyle = colors[i]+'88'; ctx.lineWidth=5; ctx.lineCap='round';
+        ctx.stroke();
         // Label
-        ctx.font = '9px Space Mono,monospace';
-        ctx.fillStyle = 'rgba(200,218,255,0.7)';
-        ctx.textAlign = 'center';
-        ctx.fillText(m, x + barW / 2, pad.t + chartH + 16);
-
-        // Value
-        if (progress > 0.8) {
-          ctx.font = 'bold 10px Space Mono,monospace';
-          ctx.fillStyle = colors[i];
-          ctx.fillText(auc[i].toFixed(2), x + barW / 2, y - 5);
+        if(p>0.7){
+          const lx = cx + Math.cos(angle)*(mR+16);
+          const ly = cy + Math.sin(angle)*(mR+16);
+          ctx.font='bold 9px Space Mono,monospace';
+          ctx.fillStyle=colors[i]; ctx.textAlign='center';
+          ctx.fillText(m,lx,ly+3);
         }
-        ctx.textAlign = 'left';
       });
-
-      if (progress < 1.05) {
-        progress += 0.025;
-        requestAnimationFrame(drawBias);
-      }
+      // Center label
+      ctx.textAlign='center';
+      ctx.font='9px Space Mono,monospace';
+      ctx.fillStyle='rgba(180,200,240,0.5)';
+      ctx.fillText('AUC',cx,cy+4);
+      // Legend
+      ctx.font='8px Space Mono,monospace';
+      ctx.fillStyle='rgba(150,170,210,0.7)'; ctx.textAlign='left';
+      ctx.fillText('▬ Male  ▬ Female',14,H-8);
+      ctx.textAlign='left';
+      if(prog<1.05){prog+=0.022;requestAnimationFrame(drawBias);}
     }
-    const obs = new IntersectionObserver(e => { if (e[0].isIntersecting) { drawBias(); obs.disconnect(); } }, { threshold: 0.2 });
+    const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting){drawBias();obs.disconnect();}},{threshold:0.2});
     obs.observe(c1);
   }
 
-  // Chart 2 — EI: animated scatter plot
+  // ── Chart 2: EI — Animated brain wave / heartbeat style
   const c2 = document.getElementById('ei-chart');
   if (c2) {
     const ctx = c2.getContext('2d');
     const W = c2.offsetWidth || 300, H = c2.offsetHeight || 180;
     c2.width = W; c2.height = H;
-    const points = Array.from({ length: 50 }, () => ({
-      x: Math.random() * 0.9 + 0.05,
-      y: Math.random() * 0.7 + 0.05 + (Math.random() * 0.3),
-      c: `hsl(${190 + Math.random()*40}, 80%, 60%)`
-    }));
+    // 7 regression model R² values
+    const models = ['M1','M2','M3','M4','M5','M6','M7'];
+    const r2 = [0.12,0.19,0.28,0.35,0.41,0.38,0.44];
+    const colors7 = ['#6366f1','#818cf8','#06b6d4','#22d3ee','#14b8a6','#34d399','#a78bfa'];
     let prog = 0;
     function drawEI() {
-      ctx.clearRect(0, 0, W, H);
-      const p = { l:20,r:10,t:14,b:20 };
-      const cW = W-p.l-p.r, cH = H-p.t-p.b;
-      const visible = Math.floor(points.length * Math.min(prog,1));
-      points.slice(0,visible).forEach(pt => {
-        ctx.beginPath();
-        ctx.arc(p.l + pt.x*cW, p.t + (1-pt.y)*cH, 3.5, 0, Math.PI*2);
-        ctx.fillStyle = pt.c + 'cc'; ctx.fill();
+      ctx.clearRect(0,0,W,H);
+      const p={l:24,r:10,t:16,b:28};
+      const cW=W-p.l-p.r, cH=H-p.t-p.b;
+      const barW = cW/models.length*0.6;
+      const gap = cW/models.length;
+      // Subtle grid
+      [0.25,0.5,0.75].forEach(v=>{
+        const y=p.t+cH*(1-v);
+        ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(p.l+cW,y);
+        ctx.strokeStyle='rgba(99,102,241,0.08)';ctx.lineWidth=1;ctx.stroke();
       });
-      // Trend line
-      if (prog > 0.9) {
-        ctx.beginPath();
-        ctx.moveTo(p.l, p.t + cH * 0.75);
-        ctx.lineTo(p.l + cW, p.t + cH * 0.2);
-        ctx.strokeStyle = 'rgba(6,182,212,0.5)';
-        ctx.lineWidth = 1.5; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
-      }
-      if (prog < 1.05) { prog += 0.04; requestAnimationFrame(drawEI); }
+      models.forEach((m,i)=>{
+        const val=r2[i]*Math.min(prog,1);
+        const x=p.l+gap*i+gap/2-barW/2;
+        const bH=cH*val; const y=p.t+cH-bH;
+        // Glowing bar
+        const grad=ctx.createLinearGradient(0,y,0,y+bH);
+        grad.addColorStop(0,colors7[i]);
+        grad.addColorStop(1,colors7[i]+'22');
+        ctx.beginPath();ctx.roundRect(x,y,barW,bH,[3,3,0,0]);
+        ctx.fillStyle=grad;ctx.fill();
+        // Glow
+        ctx.shadowColor=colors7[i];ctx.shadowBlur=8;
+        ctx.beginPath();ctx.roundRect(x,y,barW,Math.min(bH,4),[2]);
+        ctx.fillStyle=colors7[i];ctx.fill();
+        ctx.shadowBlur=0;
+        // Label
+        ctx.font='8px Space Mono,monospace';ctx.fillStyle='rgba(180,200,240,0.6)';
+        ctx.textAlign='center';ctx.fillText(m,x+barW/2,p.t+cH+14);
+        if(prog>0.85){
+          ctx.font='bold 8px Space Mono,monospace';ctx.fillStyle=colors7[i];
+          ctx.fillText(r2[i].toFixed(2),x+barW/2,y-4);
+        }
+        ctx.textAlign='left';
+      });
+      // Y-axis label
+      ctx.save();ctx.translate(10,p.t+cH/2);ctx.rotate(-Math.PI/2);
+      ctx.font='7px Space Mono,monospace';ctx.fillStyle='rgba(130,150,190,0.5)';
+      ctx.textAlign='center';ctx.fillText('R²',0,0);ctx.restore();
+      if(prog<1.05){prog+=0.025;requestAnimationFrame(drawEI);}
     }
-    const obs = new IntersectionObserver(e => { if (e[0].isIntersecting) { drawEI(); obs.disconnect(); } }, { threshold: 0.2 });
+    const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting){drawEI();obs.disconnect();}},{threshold:0.2});
     obs.observe(c2);
   }
 
-  // Chart 3 — Investment: animated line chart
+  // ── Chart 3: Investment — Candlestick style NVDA vs model
   const c3 = document.getElementById('invest-chart');
   if (c3) {
     const ctx = c3.getContext('2d');
     const W = c3.offsetWidth || 300, H = c3.offsetHeight || 180;
     c3.width = W; c3.height = H;
-    const dataA = [42,45,41,48,52,49,55,58,54,61,66,62,70];
-    const dataB = [42,43,46,44,50,53,51,56,60,57,64,68,65];
-    let prog = 0;
-    function drawLine() {
-      ctx.clearRect(0, 0, W, H);
-      const p={l:20,r:10,t:14,b:20};
+    // NVDA-style price movement data
+    const candles = [
+      {o:42,h:48,l:40,c:46},{o:46,h:50,l:44,c:48},{o:48,h:52,l:45,c:44},
+      {o:44,h:47,l:41,c:52},{o:52,h:58,l:50,c:56},{o:56,h:60,l:53,c:54},
+      {o:54,h:62,l:52,c:61},{o:61,h:66,l:59,c:64},{o:64,h:70,l:62,c:68},
+      {o:68,h:74,l:65,c:70},{o:70,h:78,l:68,c:75},{o:75,h:82,l:72,c:80},
+    ];
+    let prog=0;
+    function drawInvest(){
+      ctx.clearRect(0,0,W,H);
+      const p={l:10,r:10,t:14,b:18};
       const cW=W-p.l-p.r,cH=H-p.t-p.b;
-      const min=38,max=74,range=max-min;
-      const visible = Math.ceil(dataA.length * Math.min(prog,1));
-      function drawPath(data, color) {
-        if (visible < 2) return;
+      const min=38,max=84,range=max-min;
+      const visible=Math.ceil(candles.length*Math.min(prog,1));
+      const cw=cW/candles.length;
+      candles.slice(0,visible).forEach((c,i)=>{
+        const x=p.l+cw*i+cw/2;
+        const toY=v=>p.t+cH-((v-min)/range)*cH;
+        const bull=c.c>=c.o;
+        const col=bull?'#22c55e':'#ef4444';
+        // Wick
+        ctx.beginPath();ctx.moveTo(x,toY(c.h));ctx.lineTo(x,toY(c.l));
+        ctx.strokeStyle=col+'88';ctx.lineWidth=1;ctx.stroke();
+        // Body
+        const bodyY=toY(Math.max(c.o,c.c));
+        const bodyH=Math.max(2,Math.abs(toY(c.o)-toY(c.c)));
+        ctx.beginPath();ctx.roundRect(x-cw*0.28,bodyY,cw*0.56,bodyH,[1]);
+        const grad=ctx.createLinearGradient(0,bodyY,0,bodyY+bodyH);
+        grad.addColorStop(0,col);grad.addColorStop(1,col+'55');
+        ctx.fillStyle=grad;ctx.fill();
+      });
+      // ML prediction line
+      if(prog>0.5){
+        const mlData=[44,47,51,54,58,57,62,65,68,71,74,78];
+        const vis=Math.ceil(mlData.length*Math.min((prog-0.5)*2,1));
         ctx.beginPath();
-        data.slice(0,visible).forEach((v,i) => {
-          const x = p.l + (i/(dataA.length-1))*cW;
-          const y = p.t + cH - ((v-min)/range)*cH;
-          i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        mlData.slice(0,vis).forEach((v,i)=>{
+          const x=p.l+cW/candles.length*i+cW/candles.length/2;
+          const y=p.t+cH-((v-min)/range)*cH;
+          i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
         });
-        ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.stroke();
-        // Dot at end
-        const last = data[visible-1];
-        const ex = p.l + ((visible-1)/(dataA.length-1))*cW;
-        const ey = p.t + cH - ((last-min)/range)*cH;
-        ctx.beginPath(); ctx.arc(ex,ey,4,0,Math.PI*2);
-        ctx.fillStyle = color; ctx.fill();
+        ctx.strokeStyle='rgba(99,102,241,0.8)';ctx.lineWidth=1.5;
+        ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
       }
-      drawPath(dataA, '#22c55e');
-      drawPath(dataB, '#6366f1');
-      if (prog < 1.05) { prog += 0.03; requestAnimationFrame(drawLine); }
+      // Labels
+      ctx.font='8px Space Mono,monospace';ctx.fillStyle='rgba(150,170,210,0.6)';
+      ctx.textAlign='left';
+      ctx.fillText('NVDA',p.l,p.t+10);
+      if(prog>0.5){ctx.fillStyle='rgba(99,102,241,0.7)';ctx.fillText('ML Pred',p.l+40,p.t+10);}
+      if(prog<1.05){prog+=0.025;requestAnimationFrame(drawInvest);}
     }
-    const obs = new IntersectionObserver(e => { if (e[0].isIntersecting) { drawLine(); obs.disconnect(); } }, { threshold: 0.2 });
+    const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting){drawInvest();obs.disconnect();}},{threshold:0.2});
     obs.observe(c3);
   }
 
-  // Chart 4 — CHIPS: area chart
+  // ── Chart 4: CHIPS Act — Semiconductor chip grid pulse
   const c4 = document.getElementById('chips-chart');
   if (c4) {
     const ctx = c4.getContext('2d');
     const W = c4.offsetWidth || 300, H = c4.offsetHeight || 180;
     c4.width = W; c4.height = H;
-    const data = [30,35,32,40,38,45,52,48,58,62,55,70,75,68,80];
-    let prog = 0;
-    function drawArea() {
-      ctx.clearRect(0, 0, W, H);
-      const p={l:16,r:10,t:14,b:20};
-      const cW=W-p.l-p.r,cH=H-p.t-p.b;
-      const min=25,max=85,range=max-min;
-      const visible = Math.ceil(data.length * Math.min(prog,1));
-      if (visible >= 2) {
-        ctx.beginPath();
-        data.slice(0,visible).forEach((v,i) => {
-          const x = p.l + (i/(data.length-1))*cW;
-          const y = p.t + cH - ((v-min)/range)*cH;
-          i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-        });
-        const lastX = p.l + ((visible-1)/(data.length-1))*cW;
-        ctx.lineTo(lastX, p.t+cH);
-        ctx.lineTo(p.l, p.t+cH);
-        ctx.closePath();
-        const grad = ctx.createLinearGradient(0,p.t,0,p.t+cH);
-        grad.addColorStop(0,'rgba(245,158,11,0.5)');
-        grad.addColorStop(1,'rgba(245,158,11,0.02)');
-        ctx.fillStyle = grad; ctx.fill();
-        // Line on top
-        ctx.beginPath();
-        data.slice(0,visible).forEach((v,i) => {
-          const x = p.l + (i/(data.length-1))*cW;
-          const y = p.t + cH - ((v-min)/range)*cH;
-          i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-        });
-        ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2; ctx.stroke();
-      }
-      if (prog < 1.05) { prog += 0.025; requestAnimationFrame(drawArea); }
+    const COLS=10, ROWS=6;
+    const padX=16,padY=14;
+    const cellW=(W-padX*2)/COLS, cellH=(H-padY*2)/ROWS;
+    // Before/after CHIPS Act — 0=inactive, 1=pre, 2=post
+    const grid=Array.from({length:ROWS},(_,r)=>Array.from({length:COLS},(_,c)=>{
+      const idx=r*COLS+c;
+      return {val: idx<28?1:2, active:false, delay: idx*40};
+    }));
+    let startTs=null;
+    function drawChips(ts){
+      if(!startTs)startTs=ts;
+      const elapsed=ts-startTs;
+      ctx.clearRect(0,0,W,H);
+      grid.forEach((row,r)=>row.forEach((cell,c)=>{
+        const active=elapsed>cell.delay;
+        const x=padX+c*cellW+cellW*0.1;
+        const y=padY+r*cellH+cellH*0.1;
+        const w=cellW*0.8,h=cellH*0.8;
+        const isPost=cell.val===2;
+        const col=isPost?'#06b6d4':'#6366f1';
+        if(active){
+          // Glow
+          ctx.shadowColor=col;ctx.shadowBlur=active?6:0;
+          ctx.beginPath();ctx.roundRect(x,y,w,h,[2]);
+          const g=ctx.createLinearGradient(x,y,x+w,y+h);
+          g.addColorStop(0,col+(isPost?'cc':'88'));
+          g.addColorStop(1,col+'33');
+          ctx.fillStyle=g;ctx.fill();
+          ctx.shadowBlur=0;
+          // Circuit dot
+          ctx.beginPath();ctx.arc(x+w/2,y+h/2,2,0,Math.PI*2);
+          ctx.fillStyle=col;ctx.fill();
+        } else {
+          ctx.beginPath();ctx.roundRect(x,y,w,h,[2]);
+          ctx.fillStyle='rgba(30,40,60,0.4)';ctx.fill();
+        }
+      }));
+      // Legend
+      ctx.font='8px Space Mono,monospace';ctx.shadowBlur=0;
+      ctx.fillStyle='#6366f1bb';ctx.textAlign='left';
+      ctx.fillText('Pre-CHIPS',padX,H-4);
+      ctx.fillStyle='#06b6d4bb';
+      ctx.fillText('Post-CHIPS',padX+68,H-4);
+      requestAnimationFrame(drawChips);
     }
-    const obs = new IntersectionObserver(e => { if (e[0].isIntersecting) { drawArea(); obs.disconnect(); } }, { threshold: 0.2 });
+    const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting){requestAnimationFrame(drawChips);obs.disconnect();}},{threshold:0.2});
     obs.observe(c4);
   }
 }
