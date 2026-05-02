@@ -1,0 +1,510 @@
+<!DOCTYPE html><html lang="en" class="dark"><head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Analyst &amp; BI Professional — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #D94F25;
+  --black: #111111;
+  --dark: #1a1a1a;
+  --light: #e8e8e8;
+  --white: #ffffff;
+  --muted: #888888;
+  --mono: 'Geist', sans-serif;
+  --sans: 'Geist', sans-serif;
+  --display-tracking: -0.04em;
+  --display-weight: 700;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--light); font-family: var(--sans); overflow-x: hidden; }
+.m { opacity: 1; transform: translateY(0); will-change: transform, opacity; }
+.m.pre { opacity: 0; transform: translateY(20px); }
+.m.go { opacity: 1; transform: translateY(0); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+.m.go.d1 { transition-delay: 0.08s; }
+.m.go.d2 { transition-delay: 0.16s; }
+.m.go.d3 { transition-delay: 0.24s; }
+.m.go.d4 { transition-delay: 0.32s; }
+.m.go.d5 { transition-delay: 0.40s; }
+.m.go.d6 { transition-delay: 0.48s; }
+.m.pre.up { transform: translateY(24px); }
+.m.pre.down { transform: translateY(-24px); }
+.m.pre.left { transform: translateX(24px); }
+.m.pre.right { transform: translateX(-24px); }
+.m.pre.scale { transform: translateY(20px) scale(0.985); }
+.m.go.up,.m.go.down,.m.go.left,.m.go.right,.m.go.scale { transform: translate(0,0) scale(1); }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 4rem; background: rgba(17,17,17,0.95); border-bottom: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(10px); }
+.nav-logo { font-family: var(--sans); font-size: 0.78rem; color: #fff; letter-spacing: 0.2em; text-transform: uppercase; }
+.nav-logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { font-family: var(--sans); font-size: 0.68rem; color: rgba(255,255,255,0.45); text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--orange); }
+.nav-cta { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.55rem 1.3rem; border: 1px solid var(--orange); color: var(--orange); text-decoration: none; transition: all 0.2s; }
+.nav-cta:hover { background: var(--orange); color: #fff; }
+#hero { min-height: 100vh; background: var(--orange); display: flex; flex-direction: column; justify-content: flex-end; padding: 0 4rem 5rem; position: relative; overflow: hidden; }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; will-change: transform; }
+.hero-bg-word { position: absolute; bottom: -2rem; right: -1rem; font-family: var(--sans); font-size: clamp(8rem,20vw,22rem); font-weight: var(--display-weight); color: transparent; -webkit-text-stroke: 1px rgba(0,0,0,0.08); letter-spacing: var(--display-tracking); pointer-events: none; user-select: none; line-height: 1; }
+.hero-tag { font-family: var(--sans); font-size: 0.7rem; color: rgba(0,0,0,0.5); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; position: relative; z-index: 2; }
+.hero-tag::before { content: ''; display: inline-block; width: 32px; height: 1px; background: rgba(0,0,0,0.35); }
+.dot { width: 6px; height: 6px; background: var(--black); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
+.hero-name { font-size: clamp(4rem,10vw,10rem); font-weight: var(--display-weight); line-height: 0.9; letter-spacing: var(--display-tracking); color: var(--black); position: relative; z-index: 2; margin-bottom: 0.4rem; }
+.hero-sub { font-family: var(--sans); font-size: 0.82rem; color: rgba(0,0,0,0.6); max-width: 500px; line-height: 1.85; margin-top: 1.5rem; position: relative; z-index: 2; }
+.hero-sub strong { color: var(--black); }
+.hero-btns { display: flex; gap: 1rem; margin-top: 2.5rem; position: relative; z-index: 2; }
+.btn-dark { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.2rem; background: var(--black); color: #fff; text-decoration: none; font-weight: 700; transition: background 0.2s; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); display: inline-block; }
+.btn-dark:hover { background: #000; }
+.btn-outline { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.2rem; border: 1px solid rgba(0,0,0,0.35); color: var(--black); text-decoration: none; transition: all 0.2s; }
+.btn-outline:hover { background: rgba(0,0,0,0.08); }
+section { padding: 7rem 4rem; position: relative; }
+.s-label { font-family: var(--sans); font-size: 0.65rem; color: var(--orange); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+.s-label::after { content: ''; width: 50px; height: 1px; background: currentColor; opacity: 0.3; }
+.s-title { font-size: clamp(2.5rem,5vw,4.5rem); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); line-height: 1; margin-bottom: 0.5rem; }
+#about { background: var(--light); }
+#about .s-title { color: var(--black); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-top: 4rem; }
+.about-text p { font-size: 1rem; line-height: 1.95; color: rgba(0,0,0,0.65); margin-bottom: 1.4rem; }
+.about-text p strong { color: var(--orange); }
+.tool-cat { border: 1px solid rgba(0,0,0,0.1); padding: 1.4rem; background: #fff; margin-bottom: 1rem; position: relative; }
+.tool-cat::before { content: attr(data-label); position: absolute; top: -0.65rem; left: 1rem; font-family: var(--sans); font-size: 0.58rem; color: var(--orange); background: #fff; padding: 0 0.4rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.tool-cat-name { font-family: var(--sans); font-size: 0.62rem; color: #aaa; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.85rem; }
+.pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.pill { font-family: var(--sans); font-size: 0.65rem; padding: 0.3rem 0.8rem; border: 1px solid rgba(240,78,35,0.25); background: rgba(240,78,35,0.06); color: var(--orange); }
+#projects { background: var(--light); border-top: 1px solid rgba(0,0,0,0.1); }
+#projects .s-title { color: var(--black); }
+.proj-intro { font-family: var(--sans); font-size: 0.78rem; color: #777; max-width: 460px; line-height: 1.85; margin-top: 0.75rem; margin-bottom: 4rem; }
+.proj-list { display: flex; flex-direction: column; }
+.proj-item { display: grid; grid-template-columns: 64px 1fr 280px; gap: 2.5rem; padding: 2.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.1); transition: padding-left 0.4s var(--ease); cursor: default; }
+.proj-item:hover { padding-left: 0.75rem; }
+.proj-item:hover .proj-title { color: var(--orange); }
+.proj-num { font-family: var(--sans); font-size: 0.65rem; color: #bbb; padding-top: 0.2rem; }
+.proj-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.proj-tag { font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.18rem 0.55rem; border: 1px solid rgba(0,0,0,0.12); color: #999; }
+.proj-title { font-size: clamp(1.3rem,2.2vw,2rem); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); color: var(--black); margin-bottom: 0.6rem; line-height: 1.1; transition: color 0.25s; }
+.proj-desc { font-size: 0.85rem; color: rgba(0,0,0,0.5); line-height: 1.7; max-width: 440px; }
+.proj-impact { border: 1px solid rgba(0,0,0,0.1); padding: 1.25rem; background: #fff; margin-bottom: 0.75rem; }
+.impact-lbl { font-family: var(--sans); font-size: 0.58rem; color: #aaa; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.35rem; }
+.impact-val { font-size: 2rem; font-weight: var(--display-weight); color: var(--orange); line-height: 1; }
+.impact-sub { font-family: var(--sans); font-size: 0.65rem; color: #aaa; margin-top: 0.2rem; }
+.proj-tools { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tool-badge { font-family: var(--sans); font-size: 0.58rem; padding: 0.2rem 0.5rem; background: rgba(240,78,35,0.08); color: var(--orange); }
+#insights { background: var(--black); border-top: 1px solid rgba(255,255,255,0.06); }
+#insights .s-title { color: #fff; }
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 4rem; }
+.chart-card { border: 1px solid rgba(255,255,255,0.08); padding: 1.75rem; background: #1a1a1a; transition: border-color 0.3s ease; }
+.chart-card:hover { border-color: rgba(240,78,35,0.35); }
+.chart-ttl { font-family: var(--sans); font-size: 0.62rem; color: #555; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.chart-hl { font-size: 1rem; font-weight: 700; color: #ddd; margin-bottom: 1.5rem; line-height: 1.3; }
+.bar-chart { display: flex; align-items: flex-end; gap: 0.4rem; height: 120px; padding-bottom: 18px; }
+.bar-grp { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; }
+.bar { width: 100%; background: var(--orange); opacity: 0.7; transition: opacity 0.2s; }
+.bar:hover { opacity: 1; }
+.bar.b2 { background: #e8c97a; }
+.bar.b3 { background: #7ab88a; }
+.bar-lbl { position: absolute; bottom: -16px; font-family: var(--sans); font-size: 0.52rem; color: #555; }
+.chart-note { font-family: var(--sans); font-size: 0.6rem; color: #555; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin-top: 1rem; }
+.line-svg { width: 100%; height: 130px; }
+.donut-wrap { display: flex; align-items: center; gap: 1.75rem; margin-top: 0.5rem; }
+.donut-svg { width: 120px; height: 120px; flex-shrink: 0; }
+.d-legend { display: flex; flex-direction: column; gap: 0.6rem; }
+.d-row { display: flex; align-items: center; gap: 0.5rem; }
+.d-dot { width: 7px; height: 7px; border-radius: 50%; }
+.d-pct { font-size: 0.95rem; font-weight: 700; }
+.d-name { font-family: var(--sans); font-size: 0.6rem; color: #555; }
+.funnel { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
+.f-row { display: flex; align-items: center; gap: 0.75rem; }
+.f-lbl { font-family: var(--sans); font-size: 0.6rem; color: #555; width: 80px; text-align: right; flex-shrink: 0; }
+.f-track { flex: 1; height: 24px; background: rgba(255,255,255,0.04); position: relative; overflow: hidden; }
+.f-fill { height: 100%; background: var(--orange); opacity: 0.7; }
+.f-fill.alt { background: #e8c97a; opacity: 0.8; }
+.f-fill.pos { background: #7ab88a; opacity: 0.7; }
+.f-val { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-family: var(--sans); font-size: 0.58rem; color: #888; }
+.f-val.warn { color: var(--orange); font-weight: 700; }
+.legend-row { display: flex; gap: 1.5rem; margin-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.6rem; }
+.leg-item { display: flex; align-items: center; gap: 0.35rem; font-family: var(--sans); font-size: 0.58rem; color: #555; }
+#resume { background: var(--light); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+#resume .s-title { color: var(--black); }
+.r-item { padding: 1.75rem 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
+.r-period { font-family: var(--sans); font-size: 0.62rem; color: var(--orange); letter-spacing: 0.15em; margin-bottom: 0.3rem; }
+.r-role { font-size: 1.05rem; font-weight: 700; color: var(--black); margin-bottom: 0.15rem; }
+.r-org { font-family: var(--sans); font-size: 0.7rem; color: #999; margin-bottom: 0.6rem; }
+.r-desc { font-size: 0.82rem; color: rgba(0,0,0,0.55); line-height: 1.65; }
+.r-right { display: flex; flex-direction: column; gap: 1.25rem; justify-content: center; }
+.r-download { border: 1px solid rgba(0,0,0,0.12); padding: 2.5rem; text-align: center; background: #fff; }
+.r-dl-title { font-size: 1.4rem; font-weight: var(--display-weight); color: var(--black); margin-bottom: 0.4rem; }
+.r-dl-sub { font-family: var(--sans); font-size: 0.68rem; color: #999; line-height: 1.7; margin-bottom: 1.75rem; }
+.r-certs { border: 1px solid rgba(0,0,0,0.1); padding: 1.75rem; }
+.r-certs-ttl { font-family: var(--sans); font-size: 0.6rem; color: #aaa; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+.cert-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(0,0,0,0.07); }
+.cert-row:last-child { border-bottom: none; }
+.cert-name { font-family: var(--sans); font-size: 0.72rem; color: var(--black); }
+.cert-year { font-family: var(--sans); font-size: 0.6rem; color: var(--orange); }
+#contact { background: var(--orange); text-align: center; }
+#contact .s-label { color: rgba(0,0,0,0.45); justify-content: center; }
+#contact .s-label::after { display: none; }
+#contact .s-title { color: var(--black); font-size: clamp(3rem,7vw,7rem); }
+.contact-sub { font-family: var(--sans); font-size: 0.78rem; color: rgba(0,0,0,0.55); max-width: 420px; margin: 1.25rem auto 2.5rem; line-height: 1.85; }
+.contact-form { max-width: 560px; margin: 2.5rem auto 0; text-align: left; display: flex; flex-direction: column; gap: 0.85rem; }
+.f-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+.f-grp { display: flex; flex-direction: column; gap: 0.3rem; }
+.f-lbl2 { font-family: var(--sans); font-size: 0.6rem; color: rgba(0,0,0,0.45); letter-spacing: 0.15em; text-transform: uppercase; }
+.f-inp { background: rgba(255,255,255,0.25); border: 1px solid rgba(0,0,0,0.2); color: var(--black); font-family: var(--sans); font-size: 0.78rem; padding: 0.8rem 0.9rem; outline: none; width: 100%; transition: border-color 0.35s ease, background 0.35s ease; }
+.f-inp::placeholder { color: rgba(0,0,0,0.35); }
+.f-inp:focus { border-color: rgba(0,0,0,0.55); background: rgba(255,255,255,0.4); }
+textarea.f-inp { height: 90px; resize: none; }
+.f-btn { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.2rem; background: var(--black); color: #fff; border: none; cursor: pointer; font-weight: 700; align-self: flex-end; transition: filter 0.3s ease; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); }
+.f-btn:hover { filter: brightness(1.15); }
+.contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+.c-link { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.8rem 1.6rem; border: 1px solid rgba(0,0,0,0.22); color: var(--black); text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; transition: all 0.2s; }
+.c-link:hover { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.45); }
+footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.06); padding: 1.75rem 4rem; display: flex; justify-content: space-between; align-items: center; }
+.f-copy { font-family: var(--sans); font-size: 0.62rem; color: #444; letter-spacing: 0.12em; }
+.f-links { display: flex; gap: 2rem; list-style: none; }
+.f-links a { font-family: var(--sans); font-size: 0.62rem; color: #444; text-decoration: none; transition: color 0.2s; }
+.f-links a:hover { color: var(--orange); }
+/* ── THEME TOGGLE BUTTON ── */
+#theme-toggle {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.55);
+  font-size: 1rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+#theme-toggle:hover { border-color: var(--orange); color: var(--orange); }
+
+/* ── DARK MODE ── */
+/* All transitions for smooth switching */
+body, nav, section, footer, .tool-cat, .tool-cat::before, .proj-impact, .r-download, .r-certs, .chart-card, .f-inp {
+  transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+
+html.dark #about,
+html.dark #projects { background: #181818; border-color: rgba(255,255,255,0.07); }
+
+html.dark #about .s-title,
+html.dark #projects .s-title { color: #e8e8e8; }
+
+html.dark .about-text p { color: rgba(255,255,255,0.55); }
+
+html.dark .tool-cat { background: #222; border-color: rgba(255,255,255,0.08); }
+html.dark .tool-cat::before { background: #222; }
+
+html.dark .proj-item { border-color: rgba(255,255,255,0.07); }
+html.dark .proj-title { color: #e8e8e8; }
+html.dark .proj-desc { color: rgba(255,255,255,0.45); }
+html.dark .proj-tag { border-color: rgba(255,255,255,0.1); color: #666; }
+
+html.dark .proj-impact { background: #222; border-color: rgba(255,255,255,0.08); }
+
+html.dark #resume { background: #181818; }
+html.dark #resume .s-title { color: #e8e8e8; }
+html.dark .r-item { border-color: rgba(255,255,255,0.07); }
+html.dark .r-role { color: #e8e8e8; }
+html.dark .r-desc { color: rgba(255,255,255,0.45); }
+html.dark .r-download { background: #222; border-color: rgba(255,255,255,0.08); }
+html.dark .r-dl-title { color: #e8e8e8; }
+html.dark .r-certs { border-color: rgba(255,255,255,0.08); }
+html.dark .cert-row { border-color: rgba(255,255,255,0.06); }
+html.dark .cert-name { color: #e8e8e8; }
+
+html.dark #theme-toggle { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.7); }
+
+@media(max-width:860px){
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 1.5rem; }
+  #hero { padding: 0 1.5rem 4rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .proj-item { grid-template-columns: 40px 1fr; }
+  .proj-item > div:last-child { display: none; }
+  .charts-grid { grid-template-columns: 1fr; }
+  #resume { grid-template-columns: 1fr; gap: 3rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+  .f-row2 { grid-template-columns: 1fr; }
+}
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#F04E23">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#F04E23"/>
+    <text x="600" y="480" text-anchor="middle" font-family="Geist, sans-serif" font-weight="800" font-size="300" fill="#111" letter-spacing="-12">DA</text>
+    <text x="600" y="580" text-anchor="middle" font-family="Geist, sans-serif" font-size="36" fill="#111" letter-spacing="8">PORTFOLIO</text>
+  </svg>
+</template>
+<link id="gfont-Roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"></head>
+<body style="cursor: crosshair; font-family: &quot;Geist&quot;;" data-cc-id="cc-1">
+
+<nav>
+  <div class="nav-logo">J<span>/</span>DA</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#insights">Insights</a></li>
+    </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <button id="theme-toggle" aria-label="Toggle dark mode" title="Switch to light mode">
+      <span id="theme-icon">☀</span>
+    </button>
+    <a href="#contact" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid" style="transform: translateY(0px);"></div>
+  <div class="hero-bg-word">DATA</div>
+  <div class="hero-tag m pre up d1 go"><span class="dot"></span> MS Business Analytics — Open to full-time 2026</div>
+  <h1 class="hero-name m pre up d2 go">Joash / Data Analyst</h1>
+  <p class="hero-sub m pre up d3 go">Data Analyst with hands-on business ownership experience and an <strong>MS in Business Analytics</strong>. Applied SQL, Python, and BI tools to real P&amp;L decisions across <strong>hospitality, healthcare, finance, and HR</strong> — delivering ML pipelines, automated models, and KPI insights that drive operational impact.</p>
+  <div class="hero-btns m pre up d4 go">
+    <a href="#projects" class="btn-dark">View Projects</a>
+    <a href="#contact" class="btn-outline">Contact Me</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="s-label m pre right d1">01 — About</div>
+  <h2 class="s-title m pre right d2">I speak<br>both languages.</h2>
+  <div class="about-grid">
+    <div class="about-text m pre up d3">
+      <p>I'm a data analyst who bridges the gap between <strong>raw data and real decisions</strong>. My work lives at the intersection of rigorous statistical analysis and clear, compelling storytelling — because insights that can't be communicated don't drive change.</p>
+      <p>With an <strong>MS in Business Analytics</strong>, an <strong>MBA in Finance &amp; HR</strong>, and hands-on business ownership in hospitality, I've built ML pipelines in Databricks, automated Excel/VBA models, and KPI dashboards that directly informed <strong>P&amp;L decisions across healthcare, finance, and operations</strong>.</p>
+      <p>I believe the best analysis asks a better question, not just finds a better answer. I thrive where <strong>ambiguity is the norm</strong> and clarity is the goal.</p>
+    </div>
+    <div class="m pre left d4">
+      <div class="tool-cat" data-label="Programming">
+        <div class="tool-cat-name">Data &amp; Programming</div>
+        <div class="pills"><span class="pill">SQL</span><span class="pill">Python</span><span class="pill">Pandas</span><span class="pill">NumPy</span><span class="pill">Scikit-learn</span><span class="pill">R</span></div>
+      </div>
+      <div class="tool-cat" data-label="Visualization">
+        <div class="tool-cat-name">Analytics &amp; BI</div>
+        <div class="pills"><span class="pill">Tableau</span><span class="pill">Power BI (DAX)</span><span class="pill">Excel</span><span class="pill">Power Query</span><span class="pill">VBA</span></div>
+      </div>
+      <div class="tool-cat" data-label="Platforms">
+        <div class="tool-cat-name">Big Data &amp; ML</div>
+        <div class="pills"><span class="pill">PySpark</span><span class="pill">Databricks</span><span class="pill">Snowflake</span><span class="pill">KNIME</span><span class="pill">ETL</span><span class="pill">API Integration</span></div>
+      </div>
+      <div class="tool-cat" data-label="Methods">
+        <div class="tool-cat-name">Modeling &amp; Statistics</div>
+        <div class="pills"><span class="pill">Regression</span><span class="pill">Random Forest</span><span class="pill">KNN</span><span class="pill">Time Series</span><span class="pill">Monte Carlo</span><span class="pill">A/B Testing</span><span class="pill">NLP</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="s-label m pre right d1">02 — Projects</div>
+  <h2 class="s-title m pre right d2">Work that<br>moves numbers.</h2>
+  <p class="proj-intro m pre up d3">Each project starts with a real business problem and ends with a measurable outcome.</p>
+  <div class="proj-list">
+    <div class="proj-item m pre up d1">
+      <div class="proj-num">01</div>
+      <div><div class="proj-tags"><span class="proj-tag">Healthcare</span><span class="proj-tag">Excel/VBA</span><span class="proj-tag">Scenario Modeling</span></div><h3 class="proj-title">ER Visit Reduction — HCE Case Study</h3><p class="proj-desc">Designed a fully automated Excel/VBA model for multi-scenario cost and savings analysis, eliminating manual recalculation and improving evaluation efficiency. Modeled 3+ intervention scenarios to identify the highest-value cost-reduction strategies for decision-makers.</p></div>
+      <div><div class="proj-impact"><div class="impact-lbl">Intervention Scenarios</div><div class="impact-val">4</div><div class="impact-sub">cost-reduction paths modeled</div></div><div class="proj-tools"><span class="tool-badge">Excel</span><span class="tool-badge">VBA</span><span class="tool-badge">Scenario Analysis</span></div></div>
+    </div>
+    <div class="proj-item m pre up d2">
+      <div class="proj-num">02</div>
+      <div><div class="proj-tags"><span class="proj-tag">Healthcare</span><span class="proj-tag">PySpark</span><span class="proj-tag">ML Pipeline</span></div><h3 class="proj-title">Gender Bias in Medical Outcomes</h3><p class="proj-desc">Built scalable PySpark ML pipelines in Databricks to process large clinical datasets, evaluate classification model performance, and surface statistically significant gender-based bias patterns with corrective recommendations.</p></div>
+      <div><div class="proj-impact"><div class="impact-lbl">Pipeline</div><div class="impact-val">Scalable</div><div class="impact-sub">PySpark ML in Databricks</div></div><div class="proj-tools"><span class="tool-badge">PySpark</span><span class="tool-badge">Databricks</span><span class="tool-badge">Classification</span></div></div>
+    </div>
+    <div class="proj-item m pre up d3">
+      <div class="proj-num">03</div>
+      <div><div class="proj-tags"><span class="proj-tag">Finance</span><span class="proj-tag">Python</span><span class="proj-tag">ML Comparison</span></div><h3 class="proj-title">Data-Driven Investment Model</h3><p class="proj-desc">Built and compared 3 ML models (Random Forest, KNN, Linear Regression) with feature engineering across multi-variable financial datasets to optimize forecast accuracy. Random Forest outperformed baseline assumptions after cross-validation, identifying key performance drivers across asset classes.</p></div>
+      <div><div class="proj-impact"><div class="impact-lbl">Best Model</div><div class="impact-val">8.7%</div><div class="impact-sub">lower RMSE after cross-validation</div></div><div class="proj-tools"><span class="tool-badge">Python</span><span class="tool-badge">Random Forest</span><span class="tool-badge">KNN</span><span class="tool-badge">Scikit-learn</span></div></div>
+    </div>
+    <div class="proj-item m pre up d4">
+      <div class="proj-num">04</div>
+      <div><div class="proj-tags"><span class="proj-tag">Healthcare</span><span class="proj-tag">KNIME</span><span class="proj-tag">Visual Analytics</span></div><h3 class="proj-title">AI Impact on Radiologist Efficiency</h3><p class="proj-desc">Built KNIME workflows and Tableau dashboards to analyze AI-assisted diagnostic tool impact on radiologist speed and accuracy across large-scale radiographic datasets.</p></div>
+      <div><div class="proj-impact"><div class="impact-lbl">Analysis Surface</div><div class="impact-val">11K+</div><div class="impact-sub">AI-assisted imaging records analyzed</div></div><div class="proj-tools"><span class="tool-badge">KNIME</span><span class="tool-badge">Tableau</span><span class="tool-badge">Workflow Automation</span></div></div>
+    </div>
+    <div class="proj-item m pre up d5">
+      <div class="proj-num">05</div>
+      <div><div class="proj-tags"><span class="proj-tag">Education</span><span class="proj-tag">R</span><span class="proj-tag">NLP</span></div><h3 class="proj-title">Emotional Intelligence as a Predictor of Academic Success</h3><p class="proj-desc">Transformed unstructured student sentiment data into quantifiable behavioral indicators using R and NLP; regression analysis demonstrated a significant EI-to-performance correlation.</p></div>
+      <div><div class="proj-impact"><div class="impact-lbl">Finding</div><div class="impact-val">0.68</div><div class="impact-sub">correlation coefficient observed</div></div><div class="proj-tools"><span class="tool-badge">R</span><span class="tool-badge">NLP</span><span class="tool-badge">Regression</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="insights">
+  <div class="s-label m pre right d1">03 — Data Insights</div>
+  <h2 class="s-title m pre right d2">Signals in<br>the noise.</h2>
+  <div class="charts-grid">
+    <div class="chart-card m pre scale d1">
+      <div class="chart-ttl">ER Visits — Scenario Cost Savings</div>
+      <div class="chart-hl">Combined intervention strategy projected 31% reduction in avoidable ER utilization</div>
+      <div class="bar-chart">
+        <div class="bar-grp"><div class="bar" style="height:82%"></div><span class="bar-lbl">Base</span></div>
+        <div class="bar-grp"><div class="bar" style="height:68%"></div><span class="bar-lbl">Int. A</span></div>
+        <div class="bar-grp"><div class="bar b2" style="height:57%"></div><span class="bar-lbl">Int. B</span></div>
+        <div class="bar-grp"><div class="bar b2" style="height:49%"></div><span class="bar-lbl">Int. C</span></div>
+        <div class="bar-grp"><div class="bar b3" style="height:41%"></div><span class="bar-lbl">A+B</span></div>
+        <div class="bar-grp"><div class="bar b3" style="height:36%"></div><span class="bar-lbl">B+C</span></div>
+        <div class="bar-grp"><div class="bar b3" style="height:27%"></div><span class="bar-lbl">All</span></div>
+      </div>
+      <div class="chart-note">▲ Automated Excel/VBA model evaluated 3+ intervention mixes for HCE decision-makers.</div>
+    </div>
+    <div class="chart-card m pre scale d2">
+      <div class="chart-ttl">Investment Model — Predicted vs Actual</div>
+      <div class="chart-hl">Random Forest achieved the lowest prediction error after cross-validation</div>
+      <svg class="line-svg" viewBox="0 0 400 130" preserveAspectRatio="none">
+        <line x1="0" y1="32" x2="400" y2="32" stroke="rgba(255,255,255,0.04)" stroke-width="1"></line>
+        <line x1="0" y1="65" x2="400" y2="65" stroke="rgba(255,255,255,0.04)" stroke-width="1"></line>
+        <line x1="0" y1="98" x2="400" y2="98" stroke="rgba(255,255,255,0.04)" stroke-width="1"></line>
+        <polygon points="0,90 66,78 133,68 200,60 266,50 332,42 400,34 400,50 332,58 266,66 200,76 133,84 66,94 0,106" fill="rgba(240,78,35,0.07)"></polygon>
+        <polyline points="0,98 66,84 133,74 200,66 266,54 332,46 400,38" fill="none" stroke="rgba(240,78,35,0.85)" stroke-width="2" stroke-linejoin="round"></polyline>
+        <polyline points="0,100 66,86 133,76 200,70 266,58 332,50 400,42" fill="none" stroke="rgba(232,201,122,0.6)" stroke-width="1.5" stroke-dasharray="5,3"></polyline>
+        <circle cx="200" cy="66" r="3.5" fill="#F04E23"></circle>
+        <text x="208" y="62" font-size="7" fill="#F04E23" font-family="Geist, sans-serif" opacity="0.8">Model trained →</text>
+        <text x="4" y="126" font-size="7" fill="rgba(255,255,255,0.18)" font-family="Geist, sans-serif">Jan</text>
+        <text x="178" y="126" font-size="7" fill="rgba(255,255,255,0.18)" font-family="Geist, sans-serif">Jul</text>
+        <text x="370" y="126" font-size="7" fill="rgba(255,255,255,0.18)" font-family="Geist, sans-serif">Dec</text>
+      </svg>
+      <div class="legend-row">
+        <div class="leg-item"><span style="display:inline-block;width:14px;height:2px;background:#F04E23;margin-right:4px"></span>Random Forest</div>
+        <div class="leg-item"><span style="display:inline-block;width:14px;height:1px;background:#e8c97a;margin-right:4px;border-top:1px dashed #e8c97a"></span>KNN / Linear</div>
+        <div class="leg-item"><span style="display:inline-block;width:14px;height:8px;background:rgba(240,78,35,0.1);margin-right:4px"></span>Confidence</div>
+      </div>
+    </div>
+    <div class="chart-card m pre scale d3">
+      <div class="chart-ttl">Radiologist Workflow — AI Impact</div>
+      <div class="chart-hl">AI-assisted workflows improved turnaround efficiency across diagnostic reviews</div>
+      <div class="donut-wrap">
+        <svg class="donut-svg" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="14"></circle>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#F04E23" stroke-width="14" stroke-dasharray="90.7 238.76" stroke-dashoffset="0" transform="rotate(-90 50 50)"></circle>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#e8c97a" stroke-width="14" stroke-dasharray="59.7 238.76" stroke-dashoffset="-90.7" transform="rotate(-90 50 50)"></circle>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#7ab88a" stroke-width="14" stroke-dasharray="47.75 238.76" stroke-dashoffset="-150.4" transform="rotate(-90 50 50)"></circle>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="14" stroke-dasharray="40.6 238.76" stroke-dashoffset="-198.15" transform="rotate(-90 50 50)"></circle>
+          <text x="50" y="47" text-anchor="middle" font-size="10" fill="white" font-weight="700" font-family="Geist, sans-serif">11.2K</text>
+          <text x="50" y="57" text-anchor="middle" font-size="6" fill="rgba(255,255,255,0.3)" font-family="Geist, sans-serif">reads</text>
+        </svg>
+        <div class="d-legend">
+          <div class="d-row"><div class="d-dot" style="background:#F04E23"></div><div class="d-pct" style="color:#F04E23">34%</div><div class="d-name">Complex cases</div></div>
+          <div class="d-row"><div class="d-dot" style="background:#e8c97a"></div><div class="d-pct" style="color:#e8c97a">29%</div><div class="d-name">Routine — AI-assisted</div></div>
+          <div class="d-row"><div class="d-dot" style="background:#7ab88a"></div><div class="d-pct" style="color:#7ab88a">23%</div><div class="d-name">Review / QA</div></div>
+          <div class="d-row"><div class="d-dot" style="background:#444"></div><div class="d-pct" style="color:#555">14%</div><div class="d-name">Admin</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card m pre scale d4">
+      <div class="chart-ttl">Gender Bias — Classification Gap</div>
+      <div class="chart-hl">Bias evaluation identified measurable recall disparities across cohorts</div>
+      <div class="funnel">
+        <div class="f-row"><div class="f-lbl">Accuracy</div><div class="f-track"><div class="f-fill" style="width:92%"></div><span class="f-val">89%</span></div></div>
+        <div class="f-row"><div class="f-lbl">Precision M</div><div class="f-track"><div class="f-fill" style="width:88%"></div><span class="f-val">84%</span></div></div>
+        <div class="f-row"><div class="f-lbl">Precision F</div><div class="f-track"><div class="f-fill alt" style="width:71%"></div><span class="f-val">76%</span></div></div>
+        <div class="f-row"><div class="f-lbl">Recall gap ⚠</div><div class="f-track"><div class="f-fill" style="width:43%"></div><span class="f-val warn">-9pt</span></div></div>
+        <div class="f-row"><div class="f-lbl">Post-fix</div><div class="f-track"><div class="f-fill pos" style="width:86%"></div><span class="f-val" style="color:#7ab88a">91%</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="s-label m pre up d1">04 — Contact</div>
+  <h2 class="s-title m pre up d2">Let's build<br>something.</h2>
+  <p class="contact-sub m pre up d3">Open to full-time Data Analyst / BI roles. If you're turning ambiguous business questions into decisions, let's talk.</p>
+  <a href="mailto:jnk.analyst@gmail.com" class="btn-dark m pre up d4">jnk.analyst@gmail.com</a>
+  <div class="contact-form">
+    <div class="f-row2">
+      <div class="f-grp m pre up d1"><label class="f-lbl2">Name</label><input class="f-inp" type="text" placeholder="Your name"></div>
+      <div class="f-grp m pre up d2"><label class="f-lbl2">Company</label><input class="f-inp" type="text" placeholder="Optional"></div>
+    </div>
+    <div class="f-grp m pre up d3"><label class="f-lbl2">Email</label><input class="f-inp" type="email" placeholder="your@email.com"></div>
+    <div class="f-grp m pre up d4"><label class="f-lbl2">Message</label><textarea class="f-inp" placeholder="What are you working on?"></textarea></div>
+    <button class="f-btn m pre up d5">Send Message →</button>
+  </div>
+  <div class="contact-links">
+    <a href="#" class="c-link m pre up d1">in LinkedIn</a>
+    <a href="#" class="c-link m pre up d2">⌥ GitHub</a>
+    <a href="#" class="c-link m pre up d3">✦ Kaggle</a>
+    <a href="#" class="c-link m pre up d4">✉ Email</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-copy">© 2026 Data Analyst &amp; BI Portfolio</div>
+  <ul class="f-links">
+    <li><a href="#hero">Top</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="f-copy">Built with precision.</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var heroGrid = document.querySelector('.hero-grid');
+
+  // Dark mode toggle
+  var toggleBtn = document.getElementById('theme-toggle');
+  var themeIcon = document.getElementById('theme-icon');
+  var stored = localStorage.getItem('theme');
+  var isDark = stored === null ? true : stored === 'dark';
+
+  function applyTheme(dark) {
+    if (dark) {
+      document.documentElement.classList.add('dark');
+      themeIcon.textContent = '☀';
+      toggleBtn.title = 'Switch to light mode';
+    } else {
+      document.documentElement.classList.remove('dark');
+      themeIcon.innerHTML = '&#9790;';
+      toggleBtn.title = 'Switch to dark mode';
+    }
+  }
+
+  applyTheme(isDark);
+
+  toggleBtn.addEventListener('click', function () {
+    isDark = !isDark;
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    applyTheme(isDark);
+  });
+
+
+  var observer = new IntersectionObserver(function (entries, obs) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      requestAnimationFrame(function () {
+        entry.target.classList.add('go');
+      });
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+
+  document.querySelectorAll('.m.pre').forEach(function (el) {
+    observer.observe(el);
+  });
+
+  // Hero parallax
+  function updateParallax() {
+    if (!heroGrid) return;
+    var y = (window.scrollY || window.pageYOffset) * 0.25;
+    heroGrid.style.transform = 'translateY(' + y + 'px)';
+  }
+  window.addEventListener('scroll', updateParallax, { passive: true });
+  updateParallax();
+
+  // Fire hero animations on load
+  setTimeout(function () {
+    document.querySelectorAll('#hero .m.pre').forEach(function (el) {
+      el.classList.add('go');
+    });
+  }, 80);
+});
+</script>
+
+
+</body></html>
